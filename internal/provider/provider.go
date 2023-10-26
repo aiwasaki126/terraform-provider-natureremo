@@ -105,12 +105,14 @@ func (p *natureremoProvider) Configure(ctx context.Context, req provider.Configu
 func (p *natureremoProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewUserResource,
+		NewDeviceResource,
 	}
 }
 
 func (p *natureremoProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		NewUserDataSource,
+		NewDevicesDataSource,
 	}
 }
 
