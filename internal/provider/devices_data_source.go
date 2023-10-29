@@ -34,51 +34,7 @@ func (d *devicesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 			"devices": schema.ListNestedAttribute{
 				Computed: true,
 				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							Computed: true,
-						},
-						"name": schema.StringAttribute{
-							Computed: true,
-						},
-						"temperature_offset": schema.Int64Attribute{
-							Computed: true,
-						},
-						"humidity_offset": schema.Int64Attribute{
-							Computed: true,
-						},
-						"created_at": schema.StringAttribute{
-							Computed: true,
-						},
-						"updated_at": schema.StringAttribute{
-							Computed: true,
-						},
-						"firmware_version": schema.StringAttribute{
-							Computed: true,
-						},
-						"mac_address": schema.StringAttribute{
-							Computed: true,
-						},
-						"bt_mac_address": schema.StringAttribute{
-							Computed: true,
-						},
-						"serial_number": schema.StringAttribute{
-							Computed: true,
-						},
-						"users": schema.ListNestedAttribute{
-							Computed: true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"id": schema.StringAttribute{
-										Computed: true,
-									},
-									"nickname": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
-						},
-					},
+					Attributes: deviceDataSourceAttribute,
 				},
 			},
 		},
@@ -162,4 +118,43 @@ type deviceModel struct {
 	BtMacAddress      types.String          `tfsdk:"bt_mac_address"`
 	SerialNumber      types.String          `tfsdk:"serial_number"`
 	Users             []userDataSourceModel `tfsdk:"users"`
+}
+
+var deviceDataSourceAttribute = map[string]schema.Attribute{
+	"id": schema.StringAttribute{
+		Computed: true,
+	},
+	"name": schema.StringAttribute{
+		Computed: true,
+	},
+	"temperature_offset": schema.Int64Attribute{
+		Computed: true,
+	},
+	"humidity_offset": schema.Int64Attribute{
+		Computed: true,
+	},
+	"created_at": schema.StringAttribute{
+		Computed: true,
+	},
+	"updated_at": schema.StringAttribute{
+		Computed: true,
+	},
+	"firmware_version": schema.StringAttribute{
+		Computed: true,
+	},
+	"mac_address": schema.StringAttribute{
+		Computed: true,
+	},
+	"bt_mac_address": schema.StringAttribute{
+		Computed: true,
+	},
+	"serial_number": schema.StringAttribute{
+		Computed: true,
+	},
+	"users": schema.ListNestedAttribute{
+		Computed: true,
+		NestedObject: schema.NestedAttributeObject{
+			Attributes: userDataSourceAttribute,
+		},
+	},
 }

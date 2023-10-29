@@ -84,3 +84,12 @@ type userDataSourceModel struct {
 	ID       types.String `tfsdk:"id"`
 	Nickname types.String `tfsdk:"nickname"`
 }
+
+var userDataSourceAttribute = map[string]schema.Attribute{
+	"id": schema.StringAttribute{
+		Computed: true,
+	},
+	"nickname": schema.StringAttribute{
+		Computed: true,
+	},
+}
