@@ -29,12 +29,15 @@ func (d *userDataSource) Metadata(_ context.Context, req datasource.MetadataRequ
 
 func (d *userDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: "Fetch the Nature Remo user.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Computed: true,
+				Description: "Identifier of user.",
+				Computed:    true,
 			},
 			"nickname": schema.StringAttribute{
-				Computed: true,
+				Description: "Nickname of user.",
+				Computed:    true,
 			},
 		},
 	}
@@ -44,8 +47,8 @@ func (d *userDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 	user, err := d.client.UserService.Me(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to read user",
-			err.Error(),
+			"Error Reading Nature Remo User",
+			"Could not read user, unexpected error: "+err.Error(),
 		)
 		return
 	}
@@ -71,7 +74,7 @@ func (d *userDataSource) Configure(_ context.Context, req datasource.ConfigureRe
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *hashicups.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *natureremo.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

@@ -3,12 +3,12 @@
 page_title: "natureremo_user Data Source - terraform-provider-natureremo"
 subcategory: ""
 description: |-
-  
+  Fetch the Nature Remo user.
 ---
 
 # natureremo_user (Data Source)
 
-
+Fetch the Nature Remo user.
 
 
 
@@ -17,5 +17,5 @@ description: |-
 
 ### Read-Only
 
-- `id` (String) The ID of this resource.
-- `nickname` (String)
+- `id` (String) Identifier of user.
+- `nickname` (String) Nickname of user.

@@ -37,46 +37,59 @@ func (r *deviceResource) Schema(_ context.Context, _ resource.SchemaRequest, res
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Computed: true,
+				Description: "Device identifier attribute.",
+				Computed:    true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"name": schema.StringAttribute{
-				Required: true,
+				Description: "Device name.",
+				Required:    true,
 			},
 			"temperature_offset": schema.Int64Attribute{
-				Required: true,
+				Description: "Temperature offset value.",
+				Required:    true,
 			},
 			"humidity_offset": schema.Int64Attribute{
-				Required: true,
+				Description: "Humidity offset value.",
+				Required:    true,
 			},
 			"created_at": schema.StringAttribute{
-				Computed: true,
+				Description: "Timestamp when the device is registered.",
+				Computed:    true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"updated_at": schema.StringAttribute{
-				Computed: true,
+				Description: "Timestamp when the device information is updated.",
+				Computed:    true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
 			},
 			"firmware_version": schema.StringAttribute{
-				Computed: true,
+				Description: "Firmware version for the device.",
+				Computed:    true,
 			},
 			"mac_address": schema.StringAttribute{
-				Computed: true,
+				Description: "MAC address for the device.",
+				Computed:    true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"bt_mac_address": schema.StringAttribute{
-				Computed: true,
+				Description: "Bluetooth MAC address for the device.",
+				Computed:    true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"serial_number": schema.StringAttribute{
-				Computed: true,
+				Description: "Serial number for the device.",
+				Computed:    true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
@@ -87,13 +100,15 @@ func (r *deviceResource) Schema(_ context.Context, _ resource.SchemaRequest, res
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"id": schema.StringAttribute{
-							Computed: true,
+							Description: "Identifier of user.",
+							Computed:    true,
 							PlanModifiers: []planmodifier.String{
 								stringplanmodifier.UseStateForUnknown(),
 							},
 						},
 						"nickname": schema.StringAttribute{
-							Computed: true,
+							Description: "Nickname of user.",
+							Computed:    true,
 							PlanModifiers: []planmodifier.String{
 								stringplanmodifier.UseStateForUnknown(),
 							},

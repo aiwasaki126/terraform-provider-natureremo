@@ -30,50 +30,64 @@ func (d *devicesDataSource) Metadata(_ context.Context, req datasource.MetadataR
 
 func (d *devicesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: "Fetch the list of Nature Remo devices.",
 		Attributes: map[string]schema.Attribute{
 			"devices": schema.ListNestedAttribute{
 				Computed: true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"id": schema.StringAttribute{
-							Computed: true,
+							Description: "Device identifier attribute.",
+							Computed:    true,
 						},
 						"name": schema.StringAttribute{
-							Computed: true,
+							Description: "Device name.",
+							Computed:    true,
 						},
 						"temperature_offset": schema.Int64Attribute{
-							Computed: true,
+							Description: "Temperature offset value.",
+							Computed:    true,
 						},
 						"humidity_offset": schema.Int64Attribute{
-							Computed: true,
+							Description: "Humidity offset value.",
+							Computed:    true,
 						},
 						"created_at": schema.StringAttribute{
-							Computed: true,
+							Description: "Timestamp when the device is registered.",
+							Computed:    true,
 						},
 						"updated_at": schema.StringAttribute{
-							Computed: true,
+							Description: "Timestamp when the device information is updated.",
+							Computed:    true,
 						},
 						"firmware_version": schema.StringAttribute{
-							Computed: true,
+							Description: "Firmware version for the device.",
+							Computed:    true,
 						},
 						"mac_address": schema.StringAttribute{
-							Computed: true,
+							Description: "MAC address for the device.",
+							Computed:    true,
 						},
 						"bt_mac_address": schema.StringAttribute{
-							Computed: true,
+							Description: "Bluetooth MAC address for the device.",
+							Computed:    true,
 						},
 						"serial_number": schema.StringAttribute{
-							Computed: true,
+							Description: "Serial number for the device.",
+							Computed:    true,
 						},
 						"users": schema.ListNestedAttribute{
-							Computed: true,
+							Description: "List of users for the device.",
+							Computed:    true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"id": schema.StringAttribute{
-										Computed: true,
+										Description: "Identifier of user.",
+										Computed:    true,
 									},
 									"nickname": schema.StringAttribute{
-										Computed: true,
+										Description: "Nickname of user.",
+										Computed:    true,
 									},
 								},
 							},
@@ -91,7 +105,7 @@ func (d *devicesDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	devices, err := d.client.DeviceService.GetAll(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Reading Reading Nature Remo Devices",
+			"Error Reading Nature Remo Devices",
 			"Could not read devices, unexpected error: "+err.Error(),
 		)
 		return

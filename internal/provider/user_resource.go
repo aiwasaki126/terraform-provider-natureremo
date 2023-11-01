@@ -41,18 +41,25 @@ func (r *userResource) Metadata(_ context.Context, req resource.MetadataRequest,
 
 func (r *userResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: "Manages an user.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Computed: true,
+				Description: "Identifier of user.",
+				Computed:    true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"nickname": schema.StringAttribute{
-				Required: true,
+				Description: "Nickname of user.",
+				Required:    true,
 			},
 			"last_updated": schema.StringAttribute{
-				Computed: true,
+				Description: "Last updated date.",
+				Computed:    true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
 			},
 		},
 	}
@@ -76,7 +83,7 @@ func (r *userResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Nature Remo User",
-			"Could not read Nature Remo User",
+			"Could not read user, unexpexted error: "+err.Error(),
 		)
 	}
 
