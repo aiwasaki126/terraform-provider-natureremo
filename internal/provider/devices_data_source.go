@@ -3,12 +3,11 @@ package provider
 import (
 	"context"
 	"fmt"
-	"time"
+	apiclient "terraform-provider-natureremo/internal/client"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/tenntenn/natureremo"
 )
 
 var (
@@ -17,7 +16,7 @@ var (
 )
 
 type devicesDataSource struct {
-	client *natureremo.Client
+	client *apiclient.Client
 }
 
 func NewDevicesDataSource() datasource.DataSource {
@@ -44,20 +43,12 @@ func (d *devicesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 							Description: "Device name.",
 							Computed:    true,
 						},
-						"temperature_offset": schema.Int64Attribute{
+						"temperature_offset": schema.Float64Attribute{
 							Description: "Temperature offset value.",
 							Computed:    true,
 						},
 						"humidity_offset": schema.Int64Attribute{
 							Description: "Humidity offset value.",
-							Computed:    true,
-						},
-						"created_at": schema.StringAttribute{
-							Description: "Timestamp when the device is registered.",
-							Computed:    true,
-						},
-						"updated_at": schema.StringAttribute{
-							Description: "Timestamp when the device information is updated.",
 							Computed:    true,
 						},
 						"firmware_version": schema.StringAttribute{
@@ -102,7 +93,7 @@ func (d *devicesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 func (d *devicesDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var state devicesDataSourceModel
 
-	devices, err := d.client.DeviceService.GetAll(ctx)
+	devices, err := d.client.GetAllDevices(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Nature Remo Devices",
@@ -115,17 +106,15 @@ func (d *devicesDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		users := make([]userDataSourceModel, 0, len(d.Users))
 		for _, u := range d.Users {
 			users = append(users, userDataSourceModel{
-				ID:       types.StringValue(u.ID),
+				ID:       types.StringValue(u.Id),
 				Nickname: types.StringValue(u.Nickname),
 			})
 		}
-		deviceState := deviceModel{
-			ID:                types.StringValue(d.ID),
+		deviceState := deviceDataSourceModel{
+			ID:                types.StringValue(d.Id),
 			Name:              types.StringValue(d.Name),
-			TemperatureOffset: types.Int64Value(d.TemperatureOffset),
+			TemperatureOffset: types.Float64Value(d.TemperatureOffset),
 			HumidityOffset:    types.Int64Value(d.HumidityOffset),
-			CreatedAt:         types.StringValue(d.CreatedAt.Format(time.RFC3339)),
-			UpdatedAt:         types.StringValue(d.UpdatedAt.Format(time.RFC3339)),
 			FirmwareVersion:   types.StringValue(d.FirmwareVersion),
 			MacAddress:        types.StringValue(d.MacAddress),
 			BtMacAddress:      types.StringValue(d.BtMacAddress),
@@ -147,7 +136,7 @@ func (d *devicesDataSource) Configure(_ context.Context, req datasource.Configur
 		return
 	}
 
-	client, ok := req.ProviderData.(*natureremo.Client)
+	client, ok := req.ProviderData.(*apiclient.Client)
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
@@ -161,16 +150,14 @@ func (d *devicesDataSource) Configure(_ context.Context, req datasource.Configur
 }
 
 type devicesDataSourceModel struct {
-	Devices []deviceModel `tfsdk:"devices"`
+	Devices []deviceDataSourceModel `tfsdk:"devices"`
 }
 
-type deviceModel struct {
+type deviceDataSourceModel struct {
 	ID                types.String          `tfsdk:"id"`
 	Name              types.String          `tfsdk:"name"`
-	TemperatureOffset types.Int64           `tfsdk:"temperature_offset"`
+	TemperatureOffset types.Float64         `tfsdk:"temperature_offset"`
 	HumidityOffset    types.Int64           `tfsdk:"humidity_offset"`
-	CreatedAt         types.String          `tfsdk:"created_at"`
-	UpdatedAt         types.String          `tfsdk:"updated_at"`
 	FirmwareVersion   types.String          `tfsdk:"firmware_version"`
 	MacAddress        types.String          `tfsdk:"mac_address"`
 	BtMacAddress      types.String          `tfsdk:"bt_mac_address"`
