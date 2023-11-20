@@ -49,12 +49,10 @@ resource "natureremo_device" "mine" {
 ### Read-Only
 
 - `bt_mac_address` (String) Bluetooth MAC address for the device.
-- `created_at` (String) Timestamp when the device is registered.
 - `firmware_version` (String) Firmware version for the device.
 - `id` (String) Device identifier attribute.
 - `mac_address` (String) MAC address for the device.
 - `serial_number` (String) Serial number for the device.
-- `updated_at` (String) Timestamp when the device information is updated.
 - `users` (Attributes List) (see [below for nested schema](#nestedatt--users))
 
 <a id="nestedatt--users"></a>

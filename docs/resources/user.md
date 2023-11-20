@@ -31,7 +31,10 @@ variable "access_token" {
 }
 
 resource "natureremo_user" "me" {
-  nickname = "REMO_OWNER"
+  nickname      = "REMO OWNER"
+  country       = "JP"
+  distance_unit = "metric"
+  temp_unit     = "c"
 }
 
 output "natureremo_user" {
@@ -52,10 +55,15 @@ output "me" {
 
 - `nickname` (String) Nickname of user.
 
+### Optional
+
+- `country` (String) Country
+- `distance_unit` (String) Distance unit
+- `temp_unit` (String) Temperature unit
+
 ### Read-Only
 
 - `id` (String) Identifier of user.
-- `last_updated` (String) Last updated date.
 
 ## Import
 
