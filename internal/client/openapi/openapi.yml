@@ -1940,20 +1940,32 @@ components:
       properties:
         bt_mac_address:
           type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
         created_at:
           format: date-time
           type: string
         firmware_version:
           type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
         humidity_offset:
           format: float
           type: number
+          x-oapi-codegen-extra-tags:
+            validate: min=-20,max=20
         id:
           type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
         mac_address:
           type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
         name:
           type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
         newest_events:
           additionalProperties:
             description: >-
@@ -1977,9 +1989,13 @@ components:
           type: boolean
         serial_number:
           type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
         temperature_offset:
           format: float
           type: number
+          x-oapi-codegen-extra-tags:
+            validate: min=-5,max=5
         updated_at:
           format: date-time
           type: string
@@ -1990,13 +2006,30 @@ components:
             properties:
               id:
                 type: string
+                x-oapi-codegen-extra-tags:
+                  validate: required
               nickname:
                 type: string
+                x-oapi-codegen-extra-tags:
+                  validate: required
               superuser:
                 type: boolean
             type: object
+            required:
+              - id
+              - nickname
           type: array
       type: object
+      required:
+        - bt_mac_address
+        - firmware_version
+        - humidity_offset
+        - id
+        - mac_address
+        - name
+        - serial_number
+        - temperature_offset
+        - users
     DeviceResponses:
       items:
         $ref: '#/components/schemas/DeviceResponse'
@@ -2144,11 +2177,15 @@ components:
       type: object
     HumidityOffsetParams:
       properties:
-        Offset:
+        offset:
           description: Humidity offset value added to the measured humidity.
           format: float
           type: number
+          x-oapi-codegen-extra-tags:
+            validate: min=-20,max=20
       type: object
+      required:
+        - Offset
     LightParams:
       properties:
         button:
@@ -2231,11 +2268,15 @@ components:
       type: object
     TemperatureOffsetParams:
       properties:
-        Offset:
+        offset:
           description: Temperature offset value added to the measured temperature.
           format: float
           type: number
+          x-oapi-codegen-extra-tags:
+            validate: min=-5,max=5
       type: object
+      required:
+        - Offset
     Template:
       properties:
         image:
@@ -2270,19 +2311,37 @@ components:
       type: object
     UpdateDeviceParameters:
       properties:
-        Name:
+        name:
           type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
       type: object
+      required:
+        - name
     UpdateProfileParam:
       properties:
-        Country:
+        country:
           type: string
-        DistanceUnit:
+          enum:
+            - JP
+            - US
+            - CA
+            - SG
+            - AU
+            - NZ
+            - OTHERS
+        distance_unit:
           type: string
-        Nickname:
+          enum:
+            - metric
+            - imperial
+        nickname:
           type: string
-        TempUnit:
+        temp_unit:
           type: string
+          enum:
+            - c
+            - f
       type: object
     UpdateSignalParameters:
       properties:
@@ -2311,33 +2370,18 @@ components:
       type: array
     UserResponse:
       properties:
-        country:
-          type: string
-        distance_unit:
-          type: string
         id:
           type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
         nickname:
           type: string
-        temp_unit:
-          type: string
-        updated_privacy_policy:
-          properties:
-            body:
-              type: string
-            links:
-              additionalProperties:
-                properties:
-                  link:
-                    type: string
-                  text:
-                    type: string
-                type: object
-              type: object
-            title:
-              type: string
-          type: object
+          x-oapi-codegen-extra-tags:
+            validate: required
       type: object
+      required:
+        - id
+        - nickname
   securitySchemes:
     oauth2:
       flows:
