@@ -50,7 +50,6 @@ output "my_devices" {
 Read-Only:
 
 - `bt_mac_address` (String) Bluetooth MAC address for the device.
-- `created_at` (String) Timestamp when the device is registered.
 - `firmware_version` (String) Firmware version for the device.
 - `humidity_offset` (Number) Humidity offset value.
 - `id` (String) Device identifier attribute.
@@ -58,7 +57,6 @@ Read-Only:
 - `name` (String) Device name.
 - `serial_number` (String) Serial number for the device.
 - `temperature_offset` (Number) Temperature offset value.
-- `updated_at` (String) Timestamp when the device information is updated.
 - `users` (Attributes List) List of users for the device. (see [below for nested schema](#nestedatt--devices--users))
 
 <a id="nestedatt--devices--users"></a>

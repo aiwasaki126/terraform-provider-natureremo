@@ -3,11 +3,11 @@ package provider
 import (
 	"context"
 	"fmt"
+	apiclient "terraform-provider-natureremo/internal/client"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/tenntenn/natureremo"
 )
 
 var (
@@ -16,7 +16,7 @@ var (
 )
 
 type userDataSource struct {
-	client *natureremo.Client
+	client *apiclient.Client
 }
 
 func NewUserDataSource() datasource.DataSource {
@@ -44,7 +44,7 @@ func (d *userDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, r
 }
 
 func (d *userDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	user, err := d.client.UserService.Me(ctx)
+	user, err := d.client.GetProfile(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Nature Remo User",
@@ -54,7 +54,7 @@ func (d *userDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 	}
 
 	state := userDataSourceModel{
-		ID:       types.StringValue(user.ID),
+		ID:       types.StringValue(user.Id),
 		Nickname: types.StringValue(user.Nickname),
 	}
 
@@ -70,7 +70,7 @@ func (d *userDataSource) Configure(_ context.Context, req datasource.ConfigureRe
 		return
 	}
 
-	client, ok := req.ProviderData.(*natureremo.Client)
+	client, ok := req.ProviderData.(*apiclient.Client)
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
