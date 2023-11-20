@@ -16,7 +16,10 @@ variable "access_token" {
 }
 
 resource "natureremo_user" "me" {
-  nickname = "REMO_OWNER"
+  nickname      = "REMO OWNER"
+  country       = "JP"
+  distance_unit = "metric"
+  temp_unit     = "c"
 }
 
 output "natureremo_user" {
