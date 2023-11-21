@@ -17,27 +17,9 @@ type DeviceDto struct {
 	MacAddress      string `json:"mac_address"`
 	BtMacAddress    string `json:"bt_mac_address"`
 	FirmwareVersion string `json:"firmware_version"`
-
-	// Users Deprecated. Do not use in new code.
-	Users []struct {
-		Id       string `json:"id"`
-		Nickname string `json:"nickname"`
-	} `json:"users"`
 }
 
 func newDeviceDtoFromEntity(d *entity.Device) *DeviceDto {
-	users := d.GetUsers()
-
-	usersDto := make([]struct {
-		Id       string
-		Nickname string
-	}, 0, len(users))
-	for _, u := range users {
-		usersDto = append(usersDto, struct {
-			Id       string
-			Nickname string
-		}{u.GetId(), u.GetNickname()})
-	}
 	dto := &DeviceDto{
 		Id:                d.GetId(),
 		Name:              d.GetName(),
@@ -47,10 +29,6 @@ func newDeviceDtoFromEntity(d *entity.Device) *DeviceDto {
 		MacAddress:        d.GetMacAddress(),
 		BtMacAddress:      d.GetBtMacAddress(),
 		FirmwareVersion:   d.GetFirmwareVersion(),
-		Users: []struct {
-			Id       string `json:"id"`
-			Nickname string `json:"nickname"`
-		}(usersDto),
 	}
 	return dto
 }
