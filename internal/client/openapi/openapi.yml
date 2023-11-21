@@ -1999,26 +1999,6 @@ components:
         updated_at:
           format: date-time
           type: string
-        users:
-          description: Deprecated. Do not use in new code.
-          items:
-            description: Deprecated. Do not use in new code.
-            properties:
-              id:
-                type: string
-                x-oapi-codegen-extra-tags:
-                  validate: required
-              nickname:
-                type: string
-                x-oapi-codegen-extra-tags:
-                  validate: required
-              superuser:
-                type: boolean
-            type: object
-            required:
-              - id
-              - nickname
-          type: array
       type: object
       required:
         - bt_mac_address
