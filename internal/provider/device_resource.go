@@ -8,7 +8,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -82,28 +81,6 @@ func (r *deviceResource) Schema(_ context.Context, _ resource.SchemaRequest, res
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"users": schema.ListNestedAttribute{
-				Computed:      true,
-				PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"id": schema.StringAttribute{
-							Description: "Identifier of user.",
-							Computed:    true,
-							PlanModifiers: []planmodifier.String{
-								stringplanmodifier.UseStateForUnknown(),
-							},
-						},
-						"nickname": schema.StringAttribute{
-							Description: "Nickname of user.",
-							Computed:    true,
-							PlanModifiers: []planmodifier.String{
-								stringplanmodifier.UseStateForUnknown(),
-							},
-						},
-					},
-				},
-			},
 		},
 	}
 }
@@ -137,13 +114,6 @@ func (r *deviceResource) Read(ctx context.Context, req resource.ReadRequest, res
 		return
 	}
 
-	users := make([]userDataSourceModel, 0, len(device.Users))
-	for _, u := range device.Users {
-		users = append(users, userDataSourceModel{
-			ID:       types.StringValue(u.Id),
-			Nickname: types.StringValue(u.Nickname),
-		})
-	}
 	state = deviceResourceModel{
 		ID:                types.StringValue(device.Id),
 		Name:              types.StringValue(device.Name),
@@ -153,7 +123,6 @@ func (r *deviceResource) Read(ctx context.Context, req resource.ReadRequest, res
 		MacAddress:        types.StringValue(device.MacAddress),
 		BtMacAddress:      types.StringValue(device.BtMacAddress),
 		SerialNumber:      types.StringValue(device.SerialNumber),
-		Users:             users,
 	}
 
 	diags = resp.State.Set(ctx, &state)
@@ -198,7 +167,6 @@ func (r *deviceResource) Update(ctx context.Context, req resource.UpdateRequest,
 		MacAddress:        plan.MacAddress,
 		BtMacAddress:      plan.BtMacAddress,
 		SerialNumber:      plan.SerialNumber,
-		Users:             plan.Users,
 	}
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, plan)...)
@@ -248,13 +216,12 @@ func (r *deviceResource) ImportState(ctx context.Context, req resource.ImportSta
 }
 
 type deviceResourceModel struct {
-	ID                types.String          `tfsdk:"id"`
-	Name              types.String          `tfsdk:"name"`
-	TemperatureOffset types.Float64         `tfsdk:"temperature_offset"`
-	HumidityOffset    types.Int64           `tfsdk:"humidity_offset"`
-	FirmwareVersion   types.String          `tfsdk:"firmware_version"`
-	MacAddress        types.String          `tfsdk:"mac_address"`
-	BtMacAddress      types.String          `tfsdk:"bt_mac_address"`
-	SerialNumber      types.String          `tfsdk:"serial_number"`
-	Users             []userDataSourceModel `tfsdk:"users"`
+	ID                types.String  `tfsdk:"id"`
+	Name              types.String  `tfsdk:"name"`
+	TemperatureOffset types.Float64 `tfsdk:"temperature_offset"`
+	HumidityOffset    types.Int64   `tfsdk:"humidity_offset"`
+	FirmwareVersion   types.String  `tfsdk:"firmware_version"`
+	MacAddress        types.String  `tfsdk:"mac_address"`
+	BtMacAddress      types.String  `tfsdk:"bt_mac_address"`
+	SerialNumber      types.String  `tfsdk:"serial_number"`
 }

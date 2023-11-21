@@ -360,13 +360,6 @@ type DeviceResponse struct {
 	SerialNumber      string     `json:"serial_number" validate:"required"`
 	TemperatureOffset float32    `json:"temperature_offset" validate:"min=-5,max=5"`
 	UpdatedAt         *time.Time `json:"updated_at,omitempty"`
-
-	// Users Deprecated. Do not use in new code.
-	Users []struct {
-		Id        string `json:"id" validate:"required"`
-		Nickname  string `json:"nickname" validate:"required"`
-		Superuser *bool  `json:"superuser,omitempty"`
-	} `json:"users"`
 }
 
 // DeviceResponses defines model for DeviceResponses.

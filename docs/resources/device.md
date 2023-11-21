@@ -53,15 +53,6 @@ resource "natureremo_device" "mine" {
 - `id` (String) Device identifier attribute.
 - `mac_address` (String) MAC address for the device.
 - `serial_number` (String) Serial number for the device.
-- `users` (Attributes List) (see [below for nested schema](#nestedatt--users))
-
-<a id="nestedatt--users"></a>
-### Nested Schema for `users`
-
-Read-Only:
-
-- `id` (String) Identifier of user.
-- `nickname` (String) Nickname of user.
 
 ## Import
 

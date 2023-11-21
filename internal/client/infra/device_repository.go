@@ -162,14 +162,5 @@ func (r *DeviceRepository) buildDeviceEntityFromResponse(d *gen.DeviceResponse) 
 		return nil, err
 	}
 	spec := valueobject.NewDeviceSpec(d.SerialNumber, d.BtMacAddress, d.FirmwareVersion, d.MacAddress)
-
-	users := make([]*entity.User, 0, len(d.Users))
-	for _, u := range d.Users {
-		user, err := entity.ReconstructUser(u.Id, u.Nickname)
-		if err != nil {
-			return nil, err
-		}
-		users = append(users, user)
-	}
-	return entity.ReconstructDevice(d.Id, *setting, *spec, users), nil
+	return entity.ReconstructDevice(d.Id, *setting, *spec), nil
 }

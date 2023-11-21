@@ -67,22 +67,6 @@ func (d *devicesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 							Description: "Serial number for the device.",
 							Computed:    true,
 						},
-						"users": schema.ListNestedAttribute{
-							Description: "List of users for the device.",
-							Computed:    true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"id": schema.StringAttribute{
-										Description: "Identifier of user.",
-										Computed:    true,
-									},
-									"nickname": schema.StringAttribute{
-										Description: "Nickname of user.",
-										Computed:    true,
-									},
-								},
-							},
-						},
 					},
 				},
 			},
@@ -103,13 +87,6 @@ func (d *devicesDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	}
 
 	for _, d := range devices {
-		users := make([]userDataSourceModel, 0, len(d.Users))
-		for _, u := range d.Users {
-			users = append(users, userDataSourceModel{
-				ID:       types.StringValue(u.Id),
-				Nickname: types.StringValue(u.Nickname),
-			})
-		}
 		deviceState := deviceDataSourceModel{
 			ID:                types.StringValue(d.Id),
 			Name:              types.StringValue(d.Name),
@@ -119,7 +96,6 @@ func (d *devicesDataSource) Read(ctx context.Context, req datasource.ReadRequest
 			MacAddress:        types.StringValue(d.MacAddress),
 			BtMacAddress:      types.StringValue(d.BtMacAddress),
 			SerialNumber:      types.StringValue(d.SerialNumber),
-			Users:             users,
 		}
 		state.Devices = append(state.Devices, deviceState)
 	}
@@ -154,13 +130,12 @@ type devicesDataSourceModel struct {
 }
 
 type deviceDataSourceModel struct {
-	ID                types.String          `tfsdk:"id"`
-	Name              types.String          `tfsdk:"name"`
-	TemperatureOffset types.Float64         `tfsdk:"temperature_offset"`
-	HumidityOffset    types.Int64           `tfsdk:"humidity_offset"`
-	FirmwareVersion   types.String          `tfsdk:"firmware_version"`
-	MacAddress        types.String          `tfsdk:"mac_address"`
-	BtMacAddress      types.String          `tfsdk:"bt_mac_address"`
-	SerialNumber      types.String          `tfsdk:"serial_number"`
-	Users             []userDataSourceModel `tfsdk:"users"`
+	ID                types.String  `tfsdk:"id"`
+	Name              types.String  `tfsdk:"name"`
+	TemperatureOffset types.Float64 `tfsdk:"temperature_offset"`
+	HumidityOffset    types.Int64   `tfsdk:"humidity_offset"`
+	FirmwareVersion   types.String  `tfsdk:"firmware_version"`
+	MacAddress        types.String  `tfsdk:"mac_address"`
+	BtMacAddress      types.String  `tfsdk:"bt_mac_address"`
+	SerialNumber      types.String  `tfsdk:"serial_number"`
 }
