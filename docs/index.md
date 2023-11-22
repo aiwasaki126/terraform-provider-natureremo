@@ -3,12 +3,12 @@
 page_title: "natureremo Provider"
 subcategory: ""
 description: |-
-  Interact with Nature Remo API.
+  Management of Nature Remo settings including device, user profile, home and more through Nature Remo Cloud API.
 ---
 
 # natureremo Provider
 
-Interact with Nature Remo API.
+Management of Nature Remo settings including device, user profile, home and more through Nature Remo Cloud API.
 
 ## Example Usage
 

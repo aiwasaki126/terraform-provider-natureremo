@@ -3,12 +3,12 @@
 page_title: "natureremo_device Resource - terraform-provider-natureremo"
 subcategory: ""
 description: |-
-  
+  Device manages the Nature Remo device settings.
 ---
 
 # natureremo_device (Resource)
 
-
+Device manages the Nature Remo device settings.
 
 ## Example Usage
 
@@ -42,9 +42,9 @@ resource "natureremo_device" "mine" {
 
 ### Required
 
-- `humidity_offset` (Number) Humidity offset value.
+- `humidity_offset` (Number) Humidity offset value. This value ranges from -20 to 20 in 1 increments in unit of %.
 - `name` (String) Device name.
-- `temperature_offset` (Number) Temperature offset value.
+- `temperature_offset` (Number) Temperature offset value. This value ranges from -5 to 5 in 0.5 increments in unit of Celsius.
 
 ### Read-Only
 
