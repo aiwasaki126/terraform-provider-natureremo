@@ -40,7 +40,7 @@ func (p *natureremoProvider) Metadata(ctx context.Context, req provider.Metadata
 
 func (p *natureremoProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Interact with Nature Remo API.",
+		Description: "Management of Nature Remo settings including device, user profile, home and more through Nature Remo Cloud API.",
 		Attributes: map[string]schema.Attribute{
 			"access_token": schema.StringAttribute{
 				Description: "Access token for Nature Remo. May also be provided via NATURE_REMO_ACCESS_TOKEN environment variable.",
