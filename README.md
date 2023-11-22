@@ -4,13 +4,15 @@ The Terrafrom Nature Remo provider is a plugin that allows [Terraform](https://w
 
 This is the `natureremo` provider, containing generally available features.
 
+`natureremo` provider is open to public in [Terraform Registry](https://registry.terraform.io/providers/aiwasaki126/natureremo/latest).
+
 
 ## Requirements
 
 - [Terraform](https://developer.hashicorp.com/terraform/downloads) >= 1.0
 - [Go](https://golang.org/doc/install) >= 1.19
 
-## Building The Provider
+## Building the Provider
 
 1. Clone the repository
 1. Enter the repository directory
@@ -20,9 +22,9 @@ This is the `natureremo` provider, containing generally available features.
 go install
 ```
 
-## Using the provider
+## Using the Provider
 
-Fill this in for each provider
+See provider [example](./docs/index.md).
 
 ## Developing the Provider
 
