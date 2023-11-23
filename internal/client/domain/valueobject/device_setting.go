@@ -40,16 +40,6 @@ func (s *DeviceSetting) GetHumidityOffset() int64 {
 	return s.humidityOffset
 }
 
-func (s *DeviceSetting) SetHumidityOffset(offset int64) error {
-	s.humidityOffset = offset
-	return nil
-}
-
 func (s *DeviceSetting) GetTemperatureOffset() float64 {
 	return s.temperatureOffset
-}
-
-func (s *DeviceSetting) SetTemperatureOffset(offset float64) error {
-	s.temperatureOffset = offset
-	return nil
 }
