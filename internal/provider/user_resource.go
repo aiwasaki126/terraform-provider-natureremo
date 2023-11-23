@@ -42,7 +42,7 @@ func (r *userResource) Metadata(_ context.Context, req resource.MetadataRequest,
 
 func (r *userResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Manages an user.",
+		Description: "User manages the user profile, mainly preference.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Description: "Identifier of user.",
@@ -56,16 +56,16 @@ func (r *userResource) Schema(_ context.Context, _ resource.SchemaRequest, resp 
 				Required:    true,
 			},
 			"country": schema.StringAttribute{
-				Description: "Country",
-				Optional:    true,
+				MarkdownDescription: "Country. Country must be one of the following: `JP`, `US`, `CA`, `SG`, `AU`, `NZ`, `OTHERS`.",
+				Optional:            true,
 			},
 			"distance_unit": schema.StringAttribute{
-				Description: "Distance unit",
-				Optional:    true,
+				MarkdownDescription: "Distance unit. Distance unit must be one of the following: `metric`, `imperial`.",
+				Optional:            true,
 			},
 			"temp_unit": schema.StringAttribute{
-				Description: "Temperature unit",
-				Optional:    true,
+				MarkdownDescription: "Temperature unit. Temperature unit must be one of the following: `c`, `f`.",
+				Optional:            true,
 			},
 		},
 	}
@@ -152,7 +152,7 @@ func (r *userResource) Configure(_ context.Context, req resource.ConfigureReques
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *natureremo.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *apiclient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 		return
 	}

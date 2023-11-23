@@ -33,6 +33,7 @@ func (r *deviceResource) Metadata(_ context.Context, req resource.MetadataReques
 
 func (r *deviceResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: "Device manages the Nature Remo device settings.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Description: "Device identifier attribute.",
@@ -46,11 +47,11 @@ func (r *deviceResource) Schema(_ context.Context, _ resource.SchemaRequest, res
 				Required:    true,
 			},
 			"temperature_offset": schema.Float64Attribute{
-				Description: "Temperature offset value.",
+				Description: "Temperature offset value. This value ranges from -5 to 5 in 0.5 increments in unit of Celsius.",
 				Required:    true,
 			},
 			"humidity_offset": schema.Int64Attribute{
-				Description: "Humidity offset value.",
+				Description: "Humidity offset value. This value ranges from -20 to 20 in 1 increments in unit of %.",
 				Required:    true,
 			},
 			"firmware_version": schema.StringAttribute{
@@ -203,7 +204,7 @@ func (r *deviceResource) Configure(_ context.Context, req resource.ConfigureRequ
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *natureremo.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *apiclient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 		return
 	}

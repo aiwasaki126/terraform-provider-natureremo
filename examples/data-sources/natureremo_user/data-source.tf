@@ -15,9 +15,8 @@ variable "access_token" {
   sensitive = true
 }
 
-resource "natureremo_user" "me" {
-  nickname      = "REMO OWNER"
-  country       = "JP"
-  distance_unit = "metric"
-  temp_unit     = "c"
+data "natureremo_user" "me" {}
+
+output "my_profile" {
+  value = data.natureremo_user.me
 }
