@@ -91,7 +91,7 @@ func (r *ProfileRepository) extractUpdateProfileParam(p *entity.Profile) (*gen.U
 func setNickname(param *gen.UpdateProfileParam, p *entity.Profile) error {
 	switch p.GetNickname() {
 	case "":
-		break
+		return fmt.Errorf("invalid empty nickname")
 	default:
 		param.Nickname = toPtr(p.GetNickname())
 	}
