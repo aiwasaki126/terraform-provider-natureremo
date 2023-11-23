@@ -3,12 +3,12 @@
 page_title: "natureremo Provider"
 subcategory: ""
 description: |-
-  
+  Management of Nature Remo settings including device, user profile, home and more through Nature Remo Cloud API.
 ---
 
 # natureremo Provider
 
-
+Management of Nature Remo settings including device, user profile, home and more through Nature Remo Cloud API.
 
 ## Example Usage
 
@@ -25,12 +25,6 @@ provider "natureremo" {
   access_token = var.access_token
 }
 
-data "natureremo_user" "me" {}
-
-output "me" {
-  value = data.natureremo_user.me
-}
-
 variable "access_token" {
   type      = string
   sensitive = true
@@ -42,4 +36,4 @@ variable "access_token" {
 
 ### Required
 
-- `access_token` (String, Sensitive) Access token for Nature Remo
+- `access_token` (String, Sensitive) Access token for Nature Remo. May also be provided via NATURE_REMO_ACCESS_TOKEN environment variable.

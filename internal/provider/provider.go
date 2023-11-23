@@ -6,6 +6,7 @@ package provider
 import (
 	"context"
 	"os"
+	apiclient "terraform-provider-natureremo/internal/client"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -14,7 +15,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"github.com/tenntenn/natureremo"
 )
 
 // Ensure natureremo satisfies various provider interfaces.
@@ -40,11 +40,12 @@ func (p *natureremoProvider) Metadata(ctx context.Context, req provider.Metadata
 
 func (p *natureremoProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: "Management of Nature Remo settings including device, user profile, home and more through Nature Remo Cloud API.",
 		Attributes: map[string]schema.Attribute{
 			"access_token": schema.StringAttribute{
-				MarkdownDescription: "Access token for Nature Remo",
-				Required:            true,
-				Sensitive:           true,
+				Description: "Access token for Nature Remo. May also be provided via NATURE_REMO_ACCESS_TOKEN environment variable.",
+				Required:    true,
+				Sensitive:   true,
 			},
 		},
 	}
@@ -94,7 +95,13 @@ func (p *natureremoProvider) Configure(ctx context.Context, req provider.Configu
 	ctx = tflog.MaskFieldValuesWithFieldKeys(ctx, "access_token")
 	tflog.Debug(ctx, "Creating Nature Remo client")
 
-	client := natureremo.NewClient(accessToken)
+	client, err := apiclient.New(accessToken)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Failure Building Client for Nature Remo API",
+			"The provider cannot build the Nature Remo client",
+		)
+	}
 
 	resp.DataSourceData = client
 	resp.ResourceData = client

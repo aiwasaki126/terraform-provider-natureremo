@@ -1,0 +1,2384 @@
+openapi: 3.0.3
+info:
+  description: Read/Write Nature Remo
+  title: Nature API
+  version: 2.0.0
+servers:
+  - description: Public API Production
+    url: 'https://api.nature.global'
+paths:
+  /1/appliance_orders:
+    post:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Reorder appliances.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReorderAppliancesParams'
+        description: ReorderAppliancesParams
+        required: true
+  /1/appliances:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplianceResponses'
+          description: ApplianceResponses
+      security:
+        - oauth2:
+            - basic.read
+      description: |-
+        Fetch the list of appliances.
+        Requires basic.read OAuth2 scopes.
+    post:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplianceResponse'
+          description: ApplianceResponse
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Create a new appliance.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateApplianceRequest'
+        description: CreateApplianceRequest
+        required: true
+  '/1/appliances/{applianceid}':
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplianceResponse'
+          description: ApplianceResponse
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Update an appliance.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ApplianceParams'
+        description: ApplianceParams
+        required: true
+  '/1/appliances/{applianceid}/aircon_settings':
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AirconSettingsResponse'
+          description: AC settings.
+      security:
+        - oauth2:
+            - sendir
+      description: |-
+        Update air conditioner settings.
+        Requires sendir OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AirConParams_'
+        description: AirConParams_
+        required: true
+  '/1/appliances/{applianceid}/delete':
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Delete an appliance.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmptyObject'
+        description: EmptyObject
+        required: true
+  '/1/appliances/{applianceid}/light':
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightState'
+          description: Light state.
+      security:
+        - oauth2:
+            - sendir
+      description: |-
+        Send light signal.
+        Requires sendir OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LightParams'
+        description: Light parameters.
+        required: true
+  '/1/appliances/{applianceid}/light_projector':
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - sendir
+      description: |-
+        Send light_projector signal.
+        Requires sendir OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LightProjectorParams'
+        description: LightProjector parameters.
+        required: true
+  '/1/appliances/{applianceid}/signal_orders':
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Reorder signals.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReorderSignalsParams'
+        description: ReorderSignalsParams
+        required: true
+  '/1/appliances/{applianceid}/signals':
+    get:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Signals'
+          description: Signals
+      security:
+        - oauth2:
+            - basic.read
+      description: |-
+        Fetch the list of signals.
+        Requires basic.read OAuth2 scopes.
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Signal'
+          description: Signal
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Create a new signal.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateSignalParameters'
+        description: Signal parameters.
+        required: true
+  '/1/appliances/{applianceid}/tv':
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TVState'
+          description: TV state.
+      security:
+        - oauth2:
+            - sendir
+      description: |-
+        Send TV signal.
+        Requires sendir OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TVParams'
+        description: TV parameters.
+        required: true
+  /1/detectappliance:
+    post:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplianceModelAndParams'
+          description: List of air conditioner model and settings. Best match comes first.
+      security:
+        - oauth2:
+            - detectappliance
+      description: |-
+        Find the air conditioner best matching the provided infrared signal.
+        Requires detectappliance OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DetectApplianceRequest'
+        description: DetectApplianceRequest
+        required: true
+  /1/devices:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponses'
+          description: DeviceResponses
+      security:
+        - oauth2:
+            - basic.read
+      description: |-
+        Fetch the list of Remo devices.
+        Requires basic.read OAuth2 scopes.
+  '/1/devices/{deviceid}':
+    post:
+      parameters:
+        - description: Device Id
+          in: path
+          name: deviceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
+          description: DeviceResponse
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Update a device.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateDeviceParameters'
+        description: UpdateDeviceParameters
+        required: true
+  '/1/devices/{deviceid}/appliances':
+    get:
+      parameters:
+        - description: Device Id
+          in: path
+          name: deviceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplianceResponses'
+          description: ApplianceResponses
+      security:
+        - oauth2:
+            - basic.read
+      description: |-
+        Fetch the list of appliances registered to the Remo device.
+        Requires basic.read OAuth2 scopes.
+  '/1/devices/{deviceid}/delete':
+    post:
+      parameters:
+        - description: Device Id
+          in: path
+          name: deviceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Delete a device.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmptyObject'
+        description: EmptyObject
+        required: true
+  '/1/devices/{deviceid}/humidity_offset':
+    post:
+      parameters:
+        - description: Device Id
+          in: path
+          name: deviceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
+          description: DeviceResponse
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Update a device's humidity offset.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HumidityOffsetParams'
+        description: Humidity offset parameters.
+        required: true
+  '/1/devices/{deviceid}/send':
+    post:
+      parameters:
+        - description: Device Id
+          in: path
+          name: deviceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - sendrawir
+      description: |-
+        Send a signal from this device.
+        Requires sendrawir OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendSignalDeviceParameters'
+        description: SendSignalDeviceParameters
+        required: true
+  '/1/devices/{deviceid}/temperature_offset':
+    post:
+      parameters:
+        - description: Device Id
+          in: path
+          name: deviceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
+          description: DeviceResponse
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Update a device's temperature offset.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TemperatureOffsetParams'
+        description: Temperature offset parameters.
+        required: true
+  /1/echonetlite/appliances:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EchonetLiteApplianceResponse'
+          description: EchonetLiteApplianceResponse
+      security:
+        - oauth2:
+            - basic.read
+      description: |-
+        Fetch the list of ECHONET Lite appliances.
+        Requires basic.read OAuth2 scopes.
+  '/1/echonetlite/appliances/{applianceid}/refresh':
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - echonetlite.*.read
+      description: >-
+        Notify Remo E / Remo E lite to refresh one or more ECHONET Lite
+        properties. This endpoint is subject to ECHONET Lite specific rate
+        limiting. See the rate limiting section of the documentation for more
+        details.
+
+        Requires echonetlite.*.read OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RefreshELPropertyRequest'
+        description: RefreshELPropertyRequest
+        required: true
+  '/1/echonetlite/appliances/{applianceid}/set':
+    post:
+      parameters:
+        - description: Appliance Id
+          in: path
+          name: applianceid
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - echonetlite.*.write
+      description: >-
+        Set one ECHONET Lite property. This endpoint is subject to ECHONET Lite
+        specific rate limiting. See the rate limiting section of the
+        documentation for more details.
+
+        Requires echonetlite.*.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetELPropertyRequest'
+        description: SetELPropertyRequest
+        required: true
+  /1/homes:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeResponses'
+          description: HomeResponses
+      security:
+        - oauth2:
+            - home.read
+      description: |-
+        Fetch the list of homes.
+        Requires home.read OAuth2 scopes.
+    post:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeResponse'
+          description: HomeResponse
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Create a new home.
+        Requires home.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HomeParams'
+        description: HomeParams
+        required: true
+  '/1/homes/{homeid}':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeResponse'
+          description: HomeResponse
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Update a home.
+        Requires home.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HomeParams'
+        description: HomeParams
+        required: true
+  '/1/homes/{homeid}/delete':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Delete a home.
+        Requires home.write OAuth2 scopes.
+  '/1/homes/{homeid}/devices':
+    get:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponses'
+          description: DeviceResponses
+      security:
+        - oauth2:
+            - home.read
+      description: |-
+        Fetch the list of devices in a home.
+        Requires home.read OAuth2 scopes.
+  '/1/homes/{homeid}/invites':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeInvite'
+          description: HomeInvite
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Create a new home invite.
+        Requires home.write OAuth2 scopes.
+  '/1/homes/{homeid}/kick':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Kick a user from a home.
+        Requires home.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HomeUserParams'
+        description: HomeUserParams
+        required: true
+  '/1/homes/{homeid}/location':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeResponse'
+          description: HomeResponse
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Update a home's location.
+        Requires home.write OAuth2 scopes.
+  '/1/homes/{homeid}/location/delete':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeResponse'
+          description: HomeResponse
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Delete a home's location.
+        Requires home.write OAuth2 scopes.
+  '/1/homes/{homeid}/location_state/update':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Update the user's location state for a home.
+        Requires home.write OAuth2 scopes.
+  '/1/homes/{homeid}/owner':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeResponse'
+          description: HomeResponse
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Change the owner of the home.
+        Requires home.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HomeUserParams'
+        description: HomeUserParams
+        required: true
+  '/1/homes/{homeid}/part':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Part from a home.
+        Requires home.write OAuth2 scopes.
+  '/1/homes/{homeid}/transfer/{tohomeid}':
+    post:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+        - description: Transfer to Home Id
+          in: path
+          name: tohomeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Transfer devices to another home.
+        Requires home.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferRequest'
+        description: TransferRequest
+        required: true
+  '/1/homes/{homeid}/users':
+    get:
+      parameters:
+        - description: Home Id
+          in: path
+          name: homeid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAndRoles'
+          description: UserAndRoles
+      security:
+        - oauth2:
+            - home.read
+      description: |-
+        Fetch the list of users in a home.
+        Requires home.read OAuth2 scopes.
+  '/1/invites/{invitetoken}':
+    get:
+      parameters:
+        - description: Invite Token
+          in: path
+          name: invitetoken
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeInvite'
+          description: HomeInvite
+      security:
+        - oauth2:
+            - home.read
+      description: |-
+        Show a home invite.
+        Requires home.read OAuth2 scopes.
+    post:
+      parameters:
+        - description: Invite Token
+          in: path
+          name: invitetoken
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeResponse'
+          description: HomeResponse
+      security:
+        - oauth2:
+            - home.write
+      description: |-
+        Accept a home invite.
+        Requires home.write OAuth2 scopes.
+  '/1/signals/{signalid}':
+    post:
+      parameters:
+        - description: Signal Id
+          in: path
+          name: signalid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Signal'
+          description: Signal
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Update a signal.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateSignalParameters'
+        description: Signal parameters.
+        required: true
+  '/1/signals/{signalid}/delete':
+    post:
+      parameters:
+        - description: Signal Id
+          in: path
+          name: signalid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Delete a signal.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmptyObject'
+        description: EmptyObject
+        required: true
+  '/1/signals/{signalid}/send':
+    post:
+      parameters:
+        - description: Signal Id
+          in: path
+          name: signalid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyObject'
+          description: EmptyObject
+      security:
+        - oauth2:
+            - sendir
+      description: |-
+        Send a signal.
+        Requires sendir OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmptyObject'
+        description: EmptyObject
+        required: true
+  /1/users/me:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+          description: User information.
+      security:
+        - oauth2:
+            - basic.read
+      description: |-
+        Fetch the authenticated user's information.
+        Requires basic.read OAuth2 scopes.
+    post:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+          description: User information.
+      security:
+        - oauth2:
+            - basic.write
+      description: |-
+        Update authenticated user's information.
+        Requires basic.write OAuth2 scopes.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileParam'
+        description: UpdateProfileParam
+        required: true
+components:
+  responses:
+    AirconSettingsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AirconSettingsResponse'
+      description: AC settings.
+    ApplianceModelAndParams:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApplianceModelAndParams'
+      description: List of air conditioner model and settings. Best match comes first.
+    ApplianceResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApplianceResponse'
+      description: ApplianceResponse
+    ApplianceResponses:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApplianceResponses'
+      description: ApplianceResponses
+    DeviceResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeviceResponse'
+      description: DeviceResponse
+    DeviceResponses:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeviceResponses'
+      description: DeviceResponses
+    EchonetLiteApplianceResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EchonetLiteApplianceResponse'
+      description: EchonetLiteApplianceResponse
+    EmptyObject:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmptyObject'
+      description: EmptyObject
+    HomeInvite:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HomeInvite'
+      description: HomeInvite
+    HomeResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HomeResponse'
+      description: HomeResponse
+    HomeResponses:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HomeResponses'
+      description: HomeResponses
+    LightState:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LightState'
+      description: Light state.
+    Signal:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Signal'
+      description: Signal
+    Signals:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Signals'
+      description: Signals
+    TVState:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TVState'
+      description: TV state.
+    UserAndRoles:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAndRoles'
+      description: UserAndRoles
+    UserResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserResponse'
+      description: User information.
+    default:
+      description: ''
+  requestBodies:
+    AirConParams_:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/AirConParams_'
+      description: AirConParams_
+      required: true
+    ApplianceParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/ApplianceParams'
+      description: ApplianceParams
+      required: true
+    CreateApplianceRequest:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/CreateApplianceRequest'
+      description: CreateApplianceRequest
+      required: true
+    CreateSignalParameters:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/CreateSignalParameters'
+      description: Signal parameters.
+      required: true
+    DetectApplianceRequest:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/DetectApplianceRequest'
+      description: DetectApplianceRequest
+      required: true
+    EmptyObject:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/EmptyObject'
+      description: EmptyObject
+      required: true
+    HomeParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/HomeParams'
+      description: HomeParams
+      required: true
+    HomeUserParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/HomeUserParams'
+      description: HomeUserParams
+      required: true
+    HumidityOffsetParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/HumidityOffsetParams'
+      description: Humidity offset parameters.
+      required: true
+    LightParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/LightParams'
+      description: Light parameters.
+      required: true
+    LightProjectorParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/LightProjectorParams'
+      description: LightProjector parameters.
+      required: true
+    RefreshELPropertyRequest:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/RefreshELPropertyRequest'
+      description: RefreshELPropertyRequest
+      required: true
+    ReorderAppliancesParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/ReorderAppliancesParams'
+      description: ReorderAppliancesParams
+      required: true
+    ReorderSignalsParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/ReorderSignalsParams'
+      description: ReorderSignalsParams
+      required: true
+    SendSignalDeviceParameters:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/SendSignalDeviceParameters'
+      description: SendSignalDeviceParameters
+      required: true
+    SetELPropertyRequest:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/SetELPropertyRequest'
+      description: SetELPropertyRequest
+      required: true
+    TVParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/TVParams'
+      description: TV parameters.
+      required: true
+    TemperatureOffsetParams:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/TemperatureOffsetParams'
+      description: Temperature offset parameters.
+      required: true
+    TransferRequest:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/TransferRequest'
+      description: TransferRequest
+      required: true
+    UpdateDeviceParameters:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/UpdateDeviceParameters'
+      description: UpdateDeviceParameters
+      required: true
+    UpdateProfileParam:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/UpdateProfileParam'
+      description: UpdateProfileParam
+      required: true
+    UpdateSignalParameters:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/UpdateSignalParameters'
+      description: Signal parameters.
+      required: true
+  schemas:
+    AirConParams_:
+      properties:
+        air_direction:
+          description: AC air direction. Empty means automatic.
+          type: string
+        air_direction_h:
+          description: AC horizontal air direction.
+          type: string
+        air_volume:
+          description: >-
+            AC air volume. Empty means automatic. Numbers express the amount of
+            volume. The range of AirVolumes which the air conditioner accepts
+            depends on the air conditioner model and operation mode. Check the
+            'AirConRangeMode' information in the response for the range of the
+            particular air conditioner model and operation mode.
+          type: string
+        button:
+          description: >-
+            Button. Specify 'power-off' always if you want the air conditioner
+            powered off. Empty means powered on.
+          type: string
+        operation_mode:
+          description: >-
+            AC operation mode. The range of operation modes which the air
+            conditioner accepts depends on the air conditioner model. Check the
+            'AirConRangeMode' information in the response for the range of the
+            particular air conditioner model.
+          type: string
+        temperature:
+          description: >-
+            Temperature. The temperature in string format. The unit is described
+            in Aircon object. The range of Temperatures which the air
+            conditioner accepts depends on the air conditioner model and
+            operation mode. Check the 'AirConRangeMode' information in the
+            response for the range of the particular air conditioner model and
+            operation mode.
+          type: string
+        temperature_unit:
+          description: Temperature unit. 'c' or 'f' or '' for unknown.
+          type: string
+      type: object
+    AirconSettingsResponse:
+      properties:
+        button:
+          description: >-
+            Button. Specify 'power-off' always if you want the air conditioner
+            powered off. Empty means powered on.
+          type: string
+        dir:
+          description: AC air direction. Empty means automatic.
+          type: string
+        dirh:
+          description: AC horizontal air direction.
+          type: string
+        mode:
+          description: >-
+            AC operation mode. The range of operation modes which the air
+            conditioner accepts depends on the air conditioner model. Check the
+            'AirConRangeMode' information in the response for the range of the
+            particular air conditioner model.
+          type: string
+        temp:
+          description: >-
+            Temperature. The temperature in string format. The unit is described
+            in Aircon object. The range of Temperatures which the air
+            conditioner accepts depends on the air conditioner model and
+            operation mode. Check the 'AirConRangeMode' information in the
+            response for the range of the particular air conditioner model and
+            operation mode.
+          type: string
+        temp_unit:
+          description: Temperature unit. 'c' or 'f' or '' for unknown.
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        vol:
+          description: >-
+            AC air volume. Empty means automatic. Numbers express the amount of
+            volume. The range of AirVolumes which the air conditioner accepts
+            depends on the air conditioner model and operation mode. Check the
+            'AirConRangeMode' information in the response for the range of the
+            particular air conditioner model and operation mode.
+          type: string
+      type: object
+    ApplianceModelAndParam:
+      properties:
+        model:
+          properties:
+            country:
+              type: string
+            id:
+              type: string
+            image:
+              type: string
+            manufacturer:
+              type: string
+            name:
+              type: string
+            remote_name:
+              type: string
+            series:
+              type: string
+          type: object
+        params:
+          properties:
+            button:
+              description: >-
+                Button. Specify 'power-off' always if you want the air
+                conditioner powered off. Empty means powered on.
+              type: string
+            dir:
+              description: AC air direction. Empty means automatic.
+              type: string
+            dirh:
+              description: AC horizontal air direction.
+              type: string
+            mode:
+              description: >-
+                AC operation mode. The range of operation modes which the air
+                conditioner accepts depends on the air conditioner model. Check
+                the 'AirConRangeMode' information in the response for the range
+                of the particular air conditioner model.
+              type: string
+            temp:
+              description: >-
+                Temperature. The temperature in string format. The unit is
+                described in Aircon object. The range of Temperatures which the
+                air conditioner accepts depends on the air conditioner model and
+                operation mode. Check the 'AirConRangeMode' information in the
+                response for the range of the particular air conditioner model
+                and operation mode.
+              type: string
+            temp_unit:
+              description: Temperature unit. 'c' or 'f' or '' for unknown.
+              type: string
+            vol:
+              description: >-
+                AC air volume. Empty means automatic. Numbers express the amount
+                of volume. The range of AirVolumes which the air conditioner
+                accepts depends on the air conditioner model and operation mode.
+                Check the 'AirConRangeMode' information in the response for the
+                range of the particular air conditioner model and operation
+                mode.
+              type: string
+          type: object
+      type: object
+    ApplianceModelAndParams:
+      items:
+        $ref: '#/components/schemas/ApplianceModelAndParam'
+      type: array
+    ApplianceParams:
+      properties:
+        image:
+          description: 'Basename of the image file included in the app. Ex: ''ico_ac_1''.'
+          type: string
+        nickname:
+          description: Appliance name.
+          type: string
+      type: object
+    ApplianceResponse:
+      properties:
+        ac_smart_mode:
+          properties:
+            adjusting:
+              type: boolean
+            area:
+              maximum: 255
+              minimum: 0
+              type: integer
+            enabled:
+              type: boolean
+          type: object
+        aircon:
+          properties:
+            range:
+              properties:
+                fixedButtons:
+                  items:
+                    type: string
+                  type: array
+                modes:
+                  additionalProperties:
+                    properties:
+                      dir:
+                        items:
+                          type: string
+                        type: array
+                      dirh:
+                        items:
+                          type: string
+                        type: array
+                      temp:
+                        items:
+                          type: string
+                        type: array
+                      vol:
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  type: object
+              type: object
+            tempUnit:
+              type: string
+          type: object
+        aircon_smart_eco_mode:
+          properties:
+            adjusting:
+              type: boolean
+            area:
+              maximum: 255
+              minimum: 0
+              type: integer
+            enabled:
+              type: boolean
+          type: object
+        device:
+          properties:
+            bt_mac_address:
+              type: string
+            created_at:
+              format: date-time
+              type: string
+            firmware_version:
+              type: string
+            humidity_offset:
+              format: float
+              type: number
+            id:
+              type: string
+            mac_address:
+              type: string
+            name:
+              type: string
+            serial_number:
+              type: string
+            temperature_offset:
+              format: float
+              type: number
+            updated_at:
+              format: date-time
+              type: string
+          type: object
+        echonetlite:
+          description: >-
+            The ECHONET lite properties fetched from the appliance. See
+            'Detailed Requirements for ECHONET Device Objects' for more details.
+            ref. https://echonet.jp/spec_object_rl_en/
+          properties:
+            get_properties:
+              additionalProperties:
+                properties:
+                  enum:
+                    items:
+                      type: string
+                    type: array
+                  type:
+                    type: string
+                type: object
+              type: object
+            identifier:
+              type: string
+            instance:
+              type: string
+            ip:
+              type: string
+            localize:
+              properties:
+                properties:
+                  additionalProperties:
+                    properties:
+                      enum:
+                        additionalProperties:
+                          properties:
+                            label:
+                              type: string
+                          type: object
+                        type: object
+                    type: object
+                  type: object
+              type: object
+            route_type:
+              type: string
+            set_properties:
+              additionalProperties:
+                properties:
+                  enum:
+                    items:
+                      type: string
+                    type: array
+                  type:
+                    type: string
+                type: object
+              type: object
+            state: {}
+            version:
+              type: string
+          type: object
+        id:
+          type: string
+        image:
+          type: string
+        light:
+          properties:
+            buttons:
+              items:
+                properties:
+                  image:
+                    type: string
+                  label:
+                    type: string
+                  name:
+                    type: string
+                type: object
+              type: array
+            state:
+              properties:
+                brightness:
+                  type: string
+                last_button:
+                  type: string
+                power:
+                  type: string
+              type: object
+          type: object
+        light_projector:
+          properties:
+            layout:
+              properties:
+                image:
+                  type: string
+                label:
+                  type: string
+                name:
+                  type: string
+                templates:
+                  items:
+                    properties:
+                      image:
+                        type: string
+                      label:
+                        type: string
+                      name:
+                        type: string
+                      templates:
+                        items:
+                          $ref: '#/components/schemas/Template'
+                        type: array
+                      text:
+                        type: string
+                      type:
+                        type: string
+                      uuid:
+                        type: string
+                      x_size:
+                        maximum: 255
+                        minimum: 0
+                        type: integer
+                      y_size:
+                        maximum: 255
+                        minimum: 0
+                        type: integer
+                    type: object
+                  type: array
+                text:
+                  type: string
+                type:
+                  type: string
+                uuid:
+                  type: string
+                x_size:
+                  maximum: 255
+                  minimum: 0
+                  type: integer
+                y_size:
+                  maximum: 255
+                  minimum: 0
+                  type: integer
+              type: object
+          type: object
+        model: {}
+        mornin_plus:
+          properties:
+            devices:
+              items:
+                properties:
+                  active:
+                    type: boolean
+                  id:
+                    type: string
+                  image:
+                    type: string
+                  name:
+                    type: string
+                type: object
+              type: array
+            hi_speed_mode:
+              type: boolean
+          type: object
+        nickname:
+          type: string
+        qrio_lock:
+          properties:
+            bd_address:
+              type: string
+            device:
+              properties:
+                id:
+                  format: int32
+                  type: integer
+                image:
+                  type: string
+                name:
+                  type: string
+              type: object
+            is_available:
+              type: boolean
+            sub_bd_address:
+              type: string
+          type: object
+        settings:
+          properties:
+            button:
+              description: >-
+                Button. Specify 'power-off' always if you want the air
+                conditioner powered off. Empty means powered on.
+              type: string
+            dir:
+              description: AC air direction. Empty means automatic.
+              type: string
+            dirh:
+              description: AC horizontal air direction.
+              type: string
+            mode:
+              description: >-
+                AC operation mode. The range of operation modes which the air
+                conditioner accepts depends on the air conditioner model. Check
+                the 'AirConRangeMode' information in the response for the range
+                of the particular air conditioner model.
+              type: string
+            temp:
+              description: >-
+                Temperature. The temperature in string format. The unit is
+                described in Aircon object. The range of Temperatures which the
+                air conditioner accepts depends on the air conditioner model and
+                operation mode. Check the 'AirConRangeMode' information in the
+                response for the range of the particular air conditioner model
+                and operation mode.
+              type: string
+            temp_unit:
+              description: Temperature unit. 'c' or 'f' or '' for unknown.
+              type: string
+            updated_at:
+              format: date-time
+              type: string
+            vol:
+              description: >-
+                AC air volume. Empty means automatic. Numbers express the amount
+                of volume. The range of AirVolumes which the air conditioner
+                accepts depends on the air conditioner model and operation mode.
+                Check the 'AirConRangeMode' information in the response for the
+                range of the particular air conditioner model and operation
+                mode.
+              type: string
+          type: object
+        signals:
+          items:
+            properties:
+              id:
+                type: string
+              image:
+                type: string
+              name:
+                type: string
+            type: object
+          type: array
+        smart_meter:
+          properties:
+            echonetlite_properties:
+              items:
+                properties:
+                  epc:
+                    maximum: 255
+                    minimum: 0
+                    type: integer
+                  name:
+                    type: string
+                  updated_at:
+                    format: date-time
+                    type: string
+                  val:
+                    type: string
+                type: object
+              type: array
+          type: object
+        tv:
+          properties:
+            buttons:
+              items:
+                properties:
+                  image:
+                    type: string
+                  label:
+                    type: string
+                  name:
+                    type: string
+                type: object
+              type: array
+            layout:
+              items:
+                properties:
+                  buttons:
+                    items:
+                      type: string
+                    type: array
+                  type:
+                    type: string
+                type: object
+              type: array
+            state:
+              properties:
+                input:
+                  type: string
+              type: object
+          type: object
+        type:
+          description: 'Appliance types. AC, TV, LIGHT, etc.'
+          type: string
+      type: object
+    ApplianceResponses:
+      items:
+        $ref: '#/components/schemas/ApplianceResponse'
+      type: array
+    CreateApplianceRequest:
+      properties:
+        device:
+          type: string
+        image:
+          description: 'Basename of the image file included in the app. Ex: ''ico_ac_1''.'
+          type: string
+        model_type:
+          description: 'Enum of ''AC'', ''TV'', ''Light'''
+          type: string
+        nickname:
+          description: Appliance name.
+          type: string
+      type: object
+    CreateSignalParameters:
+      properties:
+        Image:
+          description: 'Basename of the image file included in the app. Ex: ''ico_io''.'
+          type: string
+        Message:
+          description: >-
+            JSON serialized object describing infrared signals. Includes 'data',
+            'freq' and 'format' keys.
+          type: string
+        Name:
+          description: Signal name.
+          type: string
+      type: object
+    DetectApplianceRequest:
+      properties:
+        Device:
+          type: string
+        Message:
+          description: >-
+            JSON serialized object describing infrared signals. Includes 'data',
+            'freq' and 'format' keys.
+          type: string
+      type: object
+    DeviceResponse:
+      properties:
+        bt_mac_address:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        created_at:
+          format: date-time
+          type: string
+        firmware_version:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        humidity_offset:
+          format: float
+          type: number
+          x-oapi-codegen-extra-tags:
+            validate: min=-20,max=20
+        id:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        mac_address:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        newest_events:
+          additionalProperties:
+            description: >-
+              The SensorValue key means 'te' = temperature, 'hu' = humidity,
+              'il' = illumination, 'mo' = movement. The val of 'mo' is always 1
+              and when movement event is captured created_at is updated.
+            properties:
+              created_at:
+                format: date-time
+                type: string
+              val:
+                format: float
+                type: number
+            type: object
+          description: >-
+            The SensorValue key means 'te' = temperature, 'hu' = humidity, 'il'
+            = illumination, 'mo' = movement. The val of 'mo' is always 1 and
+            when movement event is captured created_at is updated.
+          type: object
+        online:
+          type: boolean
+        serial_number:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        temperature_offset:
+          format: float
+          type: number
+          x-oapi-codegen-extra-tags:
+            validate: min=-5,max=5
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+      required:
+        - bt_mac_address
+        - firmware_version
+        - humidity_offset
+        - id
+        - mac_address
+        - name
+        - serial_number
+        - temperature_offset
+        - users
+    DeviceResponses:
+      items:
+        $ref: '#/components/schemas/DeviceResponse'
+      type: array
+    EchonetLiteApplianceResponse:
+      properties:
+        appliances:
+          items:
+            properties:
+              Device:
+                properties:
+                  bt_mac_address:
+                    type: string
+                  created_at:
+                    format: date-time
+                    type: string
+                  firmware_version:
+                    type: string
+                  humidity_offset:
+                    format: float
+                    type: number
+                  id:
+                    type: string
+                  mac_address:
+                    type: string
+                  name:
+                    type: string
+                  serial_number:
+                    type: string
+                  temperature_offset:
+                    format: float
+                    type: number
+                  updated_at:
+                    format: date-time
+                    type: string
+                type: object
+              id:
+                type: string
+              nickname:
+                type: string
+              properties:
+                items:
+                  properties:
+                    epc:
+                      type: string
+                    updated_at:
+                      format: date-time
+                      type: string
+                    val:
+                      type: string
+                  type: object
+                type: array
+              type:
+                type: string
+            type: object
+          type: array
+      type: object
+    EmptyObject:
+      type: object
+    HomeInvite:
+      properties:
+        home:
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+          type: object
+        url:
+          type: string
+        user:
+          properties:
+            id:
+              type: string
+            nickname:
+              type: string
+          type: object
+      type: object
+    HomeParams:
+      properties:
+        name:
+          type: string
+      type: object
+    HomeResponse:
+      properties:
+        id:
+          type: string
+        location:
+          properties:
+            latitude:
+              format: double
+              type: number
+            longitude:
+              format: double
+              type: number
+            radius:
+              format: float
+              type: number
+          type: object
+        name:
+          type: string
+        town:
+          properties:
+            id:
+              format: int32
+              type: integer
+            latitude:
+              format: double
+              type: number
+            longitude:
+              format: double
+              type: number
+            name:
+              type: string
+            origin:
+              type: string
+            prefecture:
+              type: string
+          type: object
+        users:
+          items:
+            properties:
+              id:
+                type: string
+              joined_at:
+                format: date-time
+                type: string
+              location_state:
+                type: string
+              nickname:
+                type: string
+              role:
+                type: string
+            type: object
+          type: array
+      type: object
+    HomeResponses:
+      items:
+        $ref: '#/components/schemas/HomeResponse'
+      type: array
+    HomeUserParams:
+      properties:
+        user:
+          type: string
+      type: object
+    HumidityOffsetParams:
+      properties:
+        offset:
+          description: Humidity offset value added to the measured humidity.
+          format: float
+          type: number
+          x-oapi-codegen-extra-tags:
+            validate: min=-20,max=20
+      type: object
+      required:
+        - Offset
+    LightParams:
+      properties:
+        button:
+          description: Button name.
+          type: string
+      type: object
+    LightProjectorParams:
+      properties:
+        button:
+          description: Button name.
+          type: string
+      type: object
+    LightState:
+      properties:
+        brightness:
+          type: string
+        last_button:
+          type: string
+        power:
+          type: string
+      type: object
+    RefreshELPropertyRequest:
+      properties:
+        EPC:
+          description: 'Comma separated EPCs in hex. eg: cf,da'
+          type: string
+      type: object
+    ReorderAppliancesParams:
+      properties:
+        Appliances:
+          description: 'List of all appliance IDs, comma separated.'
+          type: string
+      type: object
+    ReorderSignalsParams:
+      properties:
+        Signals:
+          description: 'List of all signal IDs, comma separated.'
+          type: string
+      type: object
+    SendSignalDeviceParameters:
+      properties:
+        Message:
+          type: string
+      type: object
+    SetELPropertyRequest:
+      properties:
+        EPC:
+          description: 'EPC in hex string. eg: cf'
+          type: string
+        Val:
+          description: >-
+            Value in hex string. String length must be 2x the number of bytes
+            according to ECHONET Lite spec, and filled with zero if necessary.
+            eg: 000000FF
+          type: string
+      type: object
+    Signal:
+      properties:
+        id:
+          type: string
+        image:
+          type: string
+        name:
+          type: string
+      type: object
+    Signals:
+      items:
+        $ref: '#/components/schemas/Signal'
+      type: array
+    TVParams:
+      properties:
+        button:
+          description: Button name.
+          type: string
+      type: object
+    TVState:
+      properties:
+        input:
+          type: string
+      type: object
+    TemperatureOffsetParams:
+      properties:
+        offset:
+          description: Temperature offset value added to the measured temperature.
+          format: float
+          type: number
+          x-oapi-codegen-extra-tags:
+            validate: min=-5,max=5
+      type: object
+      required:
+        - Offset
+    Template:
+      properties:
+        image:
+          type: string
+        label:
+          type: string
+        name:
+          type: string
+        templates:
+          items:
+            $ref: '#/components/schemas/Template'
+          type: array
+        text:
+          type: string
+        type:
+          type: string
+        uuid:
+          type: string
+        x_size:
+          maximum: 255
+          minimum: 0
+          type: integer
+        y_size:
+          maximum: 255
+          minimum: 0
+          type: integer
+      type: object
+    TransferRequest:
+      properties:
+        Devices:
+          type: string
+      type: object
+    UpdateDeviceParameters:
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+      type: object
+      required:
+        - name
+    UpdateProfileParam:
+      properties:
+        country:
+          type: string
+          enum:
+            - JP
+            - US
+            - CA
+            - SG
+            - AU
+            - NZ
+            - OTHERS
+        distance_unit:
+          type: string
+          enum:
+            - metric
+            - imperial
+        nickname:
+          type: string
+        temp_unit:
+          type: string
+          enum:
+            - c
+            - f
+      type: object
+    UpdateSignalParameters:
+      properties:
+        Image:
+          description: 'Basename of the image file included in the app. Ex: ''ico_io''.'
+          type: string
+        Name:
+          description: Signal name.
+          type: string
+      type: object
+    UserAndRole:
+      properties:
+        role:
+          type: string
+        user:
+          properties:
+            id:
+              type: string
+            nickname:
+              type: string
+          type: object
+      type: object
+    UserAndRoles:
+      items:
+        $ref: '#/components/schemas/UserAndRole'
+      type: array
+    UserResponse:
+      properties:
+        id:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        nickname:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+      type: object
+      required:
+        - id
+        - nickname
+  securitySchemes:
+    oauth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://api.nature.global/oauth2/auth'
+          scopes:
+            basic: >-
+              Read + write access to user's profile (excluding email), Remos,
+              appliances, signals.
+            basic.read: >-
+              Read only access to user's profile (excluding email), Remos,
+              appliances, signals.
+            detectappliance: Detect air conditioner model from infrared signals.
+            home: Read + write access to user's home.
+            home.read: Read only access to user's home.
+            sendir: Send infrared signals through Remo.
+            sendrawir: Send infrared signals in raw format through Remo.
+          tokenUrl: 'https://api.nature.global/oauth2/token'
+      type: oauth2
+

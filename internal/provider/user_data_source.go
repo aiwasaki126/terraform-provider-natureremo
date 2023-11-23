@@ -3,11 +3,11 @@ package provider
 import (
 	"context"
 	"fmt"
+	apiclient "terraform-provider-natureremo/internal/client"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/tenntenn/natureremo"
 )
 
 var (
@@ -16,7 +16,7 @@ var (
 )
 
 type userDataSource struct {
-	client *natureremo.Client
+	client *apiclient.Client
 }
 
 func NewUserDataSource() datasource.DataSource {
@@ -29,29 +29,32 @@ func (d *userDataSource) Metadata(_ context.Context, req datasource.MetadataRequ
 
 func (d *userDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: "Fetch the Nature Remo user profile.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Computed: true,
+				Description: "Identifier of user.",
+				Computed:    true,
 			},
 			"nickname": schema.StringAttribute{
-				Computed: true,
+				Description: "Nickname of user.",
+				Computed:    true,
 			},
 		},
 	}
 }
 
 func (d *userDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	user, err := d.client.UserService.Me(ctx)
+	user, err := d.client.GetProfile(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to read user",
-			err.Error(),
+			"Error Reading Nature Remo User",
+			"Could not read user, unexpected error: "+err.Error(),
 		)
 		return
 	}
 
 	state := userDataSourceModel{
-		ID:       types.StringValue(user.ID),
+		ID:       types.StringValue(user.Id),
 		Nickname: types.StringValue(user.Nickname),
 	}
 
@@ -67,11 +70,11 @@ func (d *userDataSource) Configure(_ context.Context, req datasource.ConfigureRe
 		return
 	}
 
-	client, ok := req.ProviderData.(*natureremo.Client)
+	client, ok := req.ProviderData.(*apiclient.Client)
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *hashicups.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *apiclient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

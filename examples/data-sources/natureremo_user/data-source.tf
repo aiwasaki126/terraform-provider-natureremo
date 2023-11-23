@@ -15,16 +15,8 @@ variable "access_token" {
   sensitive = true
 }
 
-resource "natureremo_user" "me" {
-  nickname = "REMO_OWNER"
-}
-
-output "natureremo_user" {
-  value = natureremo_user.me
-}
-
 data "natureremo_user" "me" {}
 
-output "me" {
+output "my_profile" {
   value = data.natureremo_user.me
 }

@@ -3,7 +3,7 @@ package provider
 import (
 	"context"
 	"fmt"
-	"time"
+	apiclient "terraform-provider-natureremo/internal/client"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -12,7 +12,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
-	"github.com/tenntenn/natureremo"
 )
 
 var (
@@ -22,13 +21,15 @@ var (
 )
 
 type userResourceModel struct {
-	ID          types.String `tfsdk:"id"`
-	Nickname    types.String `tfsdk:"nickname"`
-	LastUpdated types.String `tfsdk:"last_updated"`
+	ID           types.String `tfsdk:"id"`
+	Nickname     types.String `tfsdk:"nickname"`
+	Country      types.String `tfsdk:"country"`
+	DistanceUnit types.String `tfsdk:"distance_unit"`
+	TempUnit     types.String `tfsdk:"temp_unit"`
 }
 
 type userResource struct {
-	client *natureremo.Client
+	client *apiclient.Client
 }
 
 func NewUserResource() resource.Resource {
@@ -41,18 +42,30 @@ func (r *userResource) Metadata(_ context.Context, req resource.MetadataRequest,
 
 func (r *userResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: "User manages the user profile, mainly preference.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Computed: true,
+				Description: "Identifier of user.",
+				Computed:    true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"nickname": schema.StringAttribute{
-				Required: true,
+				Description: "Nickname of user.",
+				Required:    true,
 			},
-			"last_updated": schema.StringAttribute{
-				Computed: true,
+			"country": schema.StringAttribute{
+				MarkdownDescription: "Country. Country must be one of the following: `JP`, `US`, `CA`, `SG`, `AU`, `NZ`, `OTHERS`.",
+				Optional:            true,
+			},
+			"distance_unit": schema.StringAttribute{
+				MarkdownDescription: "Distance unit. Distance unit must be one of the following: `metric`, `imperial`.",
+				Optional:            true,
+			},
+			"temp_unit": schema.StringAttribute{
+				MarkdownDescription: "Temperature unit. Temperature unit must be one of the following: `c`, `f`.",
+				Optional:            true,
 			},
 		},
 	}
@@ -72,15 +85,15 @@ func (r *userResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 		return
 	}
 
-	user, err := r.client.UserService.Me(ctx)
+	user, err := r.client.GetProfile(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Nature Remo User",
-			"Could not read Nature Remo User",
+			"Could not read user, unexpected error: "+err.Error(),
 		)
 	}
 
-	state.ID = types.StringValue(user.ID)
+	state.ID = types.StringValue(user.Id)
 	state.Nickname = types.StringValue(user.Nickname)
 
 	diags = resp.State.Set(ctx, &state)
@@ -97,31 +110,26 @@ func (r *userResource) Update(ctx context.Context, req resource.UpdateRequest, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	_, err := r.client.UserService.Update(ctx, &natureremo.User{
-		ID:       plan.ID.ValueString(),
-		Nickname: plan.Nickname.ValueString(),
-	})
+	user, err := r.client.UpdateProfile(ctx,
+		plan.ID.ValueString(),
+		plan.Nickname.ValueString(),
+		plan.Country.ValueString(),
+		plan.DistanceUnit.ValueString(),
+		plan.TempUnit.ValueString(),
+	)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Nature Remo User",
-			"Could not update user, unexpexted error"+err.Error(),
+			"Could not update user, unexpected error"+err.Error(),
 		)
-	}
-
-	user, err := r.client.UserService.Me(ctx)
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Error Reading Nature Remo User",
-			"Could not read Nature Remo User",
-		)
-		return
 	}
 
 	plan = userResourceModel{
-		ID:          types.StringValue(user.ID),
-		Nickname:    types.StringValue(user.Nickname),
-		LastUpdated: types.StringValue(time.Now().Format(time.RFC850)),
+		ID:           types.StringValue(user.Id),
+		Nickname:     types.StringValue(user.Nickname),
+		Country:      types.StringValue(plan.Country.ValueString()),
+		DistanceUnit: types.StringValue(plan.DistanceUnit.ValueString()),
+		TempUnit:     types.StringValue(plan.TempUnit.ValueString()),
 	}
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, plan)...)
@@ -140,11 +148,11 @@ func (r *userResource) Configure(_ context.Context, req resource.ConfigureReques
 		return
 	}
 
-	client, ok := req.ProviderData.(*natureremo.Client)
+	client, ok := req.ProviderData.(*apiclient.Client)
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *natureremo.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *apiclient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 		return
 	}

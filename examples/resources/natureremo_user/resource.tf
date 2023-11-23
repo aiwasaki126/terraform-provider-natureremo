@@ -14,3 +14,10 @@ variable "access_token" {
   type      = string
   sensitive = true
 }
+
+resource "natureremo_user" "me" {
+  nickname      = "REMO OWNER"
+  country       = "JP"
+  distance_unit = "metric"
+  temp_unit     = "c"
+}
