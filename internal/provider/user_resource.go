@@ -52,7 +52,7 @@ func (r *userResource) Schema(_ context.Context, _ resource.SchemaRequest, resp 
 				},
 			},
 			"nickname": schema.StringAttribute{
-				Description: "Nickname of user.",
+				Description: "Nickname of user. This value must not be empty.",
 				Required:    true,
 			},
 			"country": schema.StringAttribute{
