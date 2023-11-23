@@ -1,10 +1,10 @@
 ---
-page_title: Abbreviations in `natureremo_user`
+page_title: Abbreviations in natureremo_user
 description: |-
   Explanation for abbreviations in `natureremo_user`.
 ---
 
-# Abbreviations in `natureremo_user`
+# Abbreviations in natureremo_user
 
 In [`natureremo_user`](https://registry.terraform.io/providers/aiwasaki126/natureremo/latest/docs/resources/user) resource, some abbreviations are used.
 

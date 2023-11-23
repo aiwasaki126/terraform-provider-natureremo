@@ -43,7 +43,7 @@ resource "natureremo_user" "me" {
 
 ### Required
 
-- `nickname` (String) Nickname of user.
+- `nickname` (String) Nickname of user. This value must not be empty.
 
 ### Optional
 
