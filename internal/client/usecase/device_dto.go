@@ -6,6 +6,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+// DeviceDto is the data transfer object of the device.
 type DeviceDto struct {
 	Id string `json:"id" validate:"required"`
 	// setting items
@@ -19,6 +20,8 @@ type DeviceDto struct {
 	FirmwareVersion string `json:"firmware_version"`
 }
 
+// newDeviceDtoFromEntity is the constructor for DeviceDto from entity.
+// This constructor is assumed to be used only in usevase layer.
 func newDeviceDtoFromEntity(d *entity.Device) *DeviceDto {
 	dto := &DeviceDto{
 		Id:                d.GetId(),
@@ -33,6 +36,8 @@ func newDeviceDtoFromEntity(d *entity.Device) *DeviceDto {
 	return dto
 }
 
+// NewDeviceDto is the constructor for DeviceDto.
+// This constructor is assumed to be used only in interface layer (client).
 func NewDeviceDto(id string, name string, humidityOffset int64, temperatureOffset float64) (*DeviceDto, error) {
 	dto := &DeviceDto{
 		Id:                id,

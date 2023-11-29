@@ -5,6 +5,7 @@ import (
 	"terraform-provider-natureremo/internal/client/domain/repository"
 )
 
+// GetProfile is the use case of retrieving the user profile.
 type GetProfile struct {
 	repositoryProfile repository.Profile
 }

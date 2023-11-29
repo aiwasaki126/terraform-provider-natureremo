@@ -2,11 +2,14 @@ package entity
 
 import "terraform-provider-natureremo/internal/client/domain/valueobject"
 
+// Profile is the user profile entity.
 type Profile struct {
 	User
 	valueobject.Preference
 }
 
+// ReconstructProfile is the entity constructor from data in DB.
+// This constructor is assumed to be used in repository.
 func ReconstructProfile(u User, p valueobject.Preference) (*Profile, error) {
 	profile := &Profile{
 		User:       u,

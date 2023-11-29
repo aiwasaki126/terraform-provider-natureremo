@@ -5,6 +5,7 @@ import (
 	"terraform-provider-natureremo/internal/client/domain/repository"
 )
 
+// GetAllDevices is the use case of retrieving all registered devices.
 type GetAllDevices struct {
 	repositoryDevice repository.Device
 }

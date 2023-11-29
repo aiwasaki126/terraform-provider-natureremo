@@ -25,6 +25,7 @@ func (r *valueRange) max() float64 {
 	return r.maxValue
 }
 
+// hasValidIncrementedValue judges if the given value is in the min-max range and properly incremented.
 func hasValidIncrementedValue(v, increment float64, valueRange *valueRange) error {
 	if increment <= 0 {
 		return fmt.Errorf("invalid increment")

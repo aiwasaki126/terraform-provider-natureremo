@@ -15,6 +15,7 @@ var (
 	_ repository.Profile = &ProfileRepository{}
 )
 
+// ProfileRepository is the repository that handles profile entity.
 type ProfileRepository struct {
 	client   *gen.Client
 	validate *validator.Validate

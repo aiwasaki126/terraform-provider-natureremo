@@ -1,5 +1,6 @@
 package valueobject
 
+// DeviceSpec is the device spec of Nature Remo.
 type DeviceSpec struct {
 	serialNumber    string
 	btMacAddress    string
@@ -7,6 +8,7 @@ type DeviceSpec struct {
 	macAddress      string
 }
 
+// NewDeviceSpec is the constructor for DeviceSpec.
 func NewDeviceSpec(serialNumber, btMacAddress, firmWareVersion, macAddress string) *DeviceSpec {
 	return &DeviceSpec{
 		serialNumber:    serialNumber,

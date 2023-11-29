@@ -4,12 +4,18 @@ import (
 	"context"
 	"fmt"
 	"terraform-provider-natureremo/internal/client/domain/entity"
+	"terraform-provider-natureremo/internal/client/domain/repository"
 	"terraform-provider-natureremo/internal/client/domain/valueobject"
 	"terraform-provider-natureremo/internal/client/infra/gen"
 
 	"github.com/go-playground/validator/v10"
 )
 
+var (
+	_ repository.Device = &DeviceRepository{}
+)
+
+// DeviceRepository is the repository that handles device entity.
 type DeviceRepository struct {
 	client   *gen.Client
 	validate *validator.Validate
