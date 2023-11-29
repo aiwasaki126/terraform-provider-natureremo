@@ -8,6 +8,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+// UpdateDevice is the use case of updating the device.
 type UpdateDevice struct {
 	repositoryDevice repository.Device
 }

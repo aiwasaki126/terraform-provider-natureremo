@@ -1,11 +1,14 @@
 package valueobject
 
+// Preference is the user preference in profile.
+// Preference is consist of country, distance unit and temperature unit.
 type Preference struct {
 	country      Country
 	distanceUnit DistanceUnit
 	tempUnit     TempUnit
 }
 
+// NewPreference is the constructor for the user preference.
 func NewPreference(country, distanceUnit, tempUnit string) (*Preference, error) {
 	c, err := NewCountry(country)
 	if err != nil {

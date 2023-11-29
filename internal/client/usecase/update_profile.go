@@ -7,6 +7,7 @@ import (
 	"terraform-provider-natureremo/internal/client/domain/valueobject"
 )
 
+// UpdateProfile is the use case of updating the user profile.
 type UpdateProfile struct {
 	repositoryProfile repository.Profile
 }

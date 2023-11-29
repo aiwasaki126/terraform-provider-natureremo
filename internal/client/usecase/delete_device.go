@@ -5,6 +5,7 @@ import (
 	"terraform-provider-natureremo/internal/client/domain/repository"
 )
 
+// DeleteDevice is the use case of deleting the device.
 type DeleteDevice struct {
 	repositoryDevice repository.Device
 }

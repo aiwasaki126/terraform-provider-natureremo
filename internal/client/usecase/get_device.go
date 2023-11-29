@@ -5,6 +5,7 @@ import (
 	"terraform-provider-natureremo/internal/client/domain/repository"
 )
 
+// GetDevice is the use case of retrieving the device specified by device ID.
 type GetDevice struct {
 	repositoryDevice repository.Device
 }

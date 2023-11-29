@@ -2,8 +2,12 @@ package valueobject
 
 import "fmt"
 
+// Country is the country setting in profile.
+// Country must be one of JP, US, CA, SG, AU, NZ and OTHERS.
 type Country string
 
+// NewCountry is the constructor for Country.
+// Invalid country name input will return error.
 func NewCountry(c string) (Country, error) {
 	switch c {
 	case "JP":
@@ -26,6 +30,7 @@ func NewCountry(c string) (Country, error) {
 	return Country(c), nil
 }
 
+// Value returns country in string.
 func (c Country) Value() string {
 	return string(c)
 }

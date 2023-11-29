@@ -1,10 +1,13 @@
 package entity
 
+// User is the user entity.
 type User struct {
 	id       string
 	nickname string
 }
 
+// ReconstructUser is the entity constructor from data in DB.
+// This constructor is assumed to be used in repository.
 func ReconstructUser(id, nickname string) (*User, error) {
 	return &User{
 		id:       id,
