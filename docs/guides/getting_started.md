@@ -1,5 +1,5 @@
 ---
-page_title: Getting Started with Nature Remo Provider
+page_title: Getting Started
 description: |-
   This guide explains how to manage Nature Remo settings using Nature Remo provider for Terraform.
 ---
