@@ -7,9 +7,11 @@ on:
   pull_request:
     paths-ignore:
       - 'README.md'
+      - 'docs/guides/*'
   push:
     paths-ignore:
       - 'README.md'
+      - 'docs/guides/*'
 
 # Testing only needs permissions to read the repository contents.
 permissions:
