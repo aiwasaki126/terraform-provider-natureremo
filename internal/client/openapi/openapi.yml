@@ -2069,6 +2069,9 @@ components:
       type: object
     EmptyObject:
       type: object
+      properties:
+        dummy_field:
+          type: string
     HomeInvite:
       properties:
         home:

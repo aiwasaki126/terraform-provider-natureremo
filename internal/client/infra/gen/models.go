@@ -392,7 +392,9 @@ type EchonetLiteApplianceResponse struct {
 }
 
 // EmptyObject defines model for EmptyObject.
-type EmptyObject = map[string]interface{}
+type EmptyObject struct {
+	DummyField *string `json:"dummy_field,omitempty"`
+}
 
 // HomeInvite defines model for HomeInvite.
 type HomeInvite struct {
