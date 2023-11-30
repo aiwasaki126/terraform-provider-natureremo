@@ -35,7 +35,7 @@ func (c *Client) addAuthorizationHeader(ctx context.Context, req *http.Request) 
 	return nil
 }
 
-// optAuthorizaionHeader sets authorization header to client request editors
+// optAuthorizaionHeader sets authorization header to client request editors.
 func (c *Client) optAuthorizaionHeader(client *gen.Client) error {
 	client.RequestEditors = append(client.RequestEditors, c.addAuthorizationHeader)
 	return nil

@@ -7,9 +7,11 @@ on:
   pull_request:
     paths-ignore:
       - 'README.md'
+      - 'docs/guides/*'
   push:
     paths-ignore:
       - 'README.md'
+      - 'docs/guides/*'
 
 # Testing only needs permissions to read the repository contents.
 permissions:
@@ -45,7 +47,7 @@ jobs:
       - run: go generate ./...
       - name: git diff
         run: |
-          git diff --compact-summary --exit-code || \
+          git diff -- . ':(exclude)docs/guides/*' --compact-summary --exit-code\
             (echo; echo "Unexpected difference in directories after code generation. Run 'go generate ./...' command and commit."; exit 1)
 
   # Run acceptance tests in a matrix with Terraform CLI versions
@@ -64,6 +66,7 @@ jobs:
           - '1.2.*'
           - '1.3.*'
           - '1.4.*'
+          - '1.5.*'
     steps:
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4.1.0
